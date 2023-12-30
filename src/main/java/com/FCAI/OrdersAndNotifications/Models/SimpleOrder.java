@@ -17,7 +17,6 @@ public class SimpleOrder extends Order {
     public SimpleOrder(){
         setProductAmount(new HashMap<>());
         setDate(LocalDateTime.now());
-
     }
 
 

@@ -18,17 +18,6 @@ public abstract class Order {
     protected LocalDateTime date;
     protected HashMap<String, Integer> productAmount;
 
-    public void add(Order order) {
-        throw new UnsupportedOperationException();
-    }
-
-    public void remove(Order order) {
-        throw new UnsupportedOperationException();
-    }
-
-    public List<Order> getOrderList() {
-        throw new UnsupportedOperationException();
-    }
 
     abstract public void getDetails();
 }

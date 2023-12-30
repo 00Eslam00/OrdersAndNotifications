@@ -13,15 +13,14 @@ public class CompoundOrder extends Order{
         orderList = new ArrayList<>();
     }*/
 
-    @Override
     public void add(Order order) {
         orderList.add(order);
     }
-    @Override
+
     public void remove(Order order) {
         orderList.remove(order);
     }
-    @Override
+
     public List<Order> getOrderList() {
         return orderList;
     }
