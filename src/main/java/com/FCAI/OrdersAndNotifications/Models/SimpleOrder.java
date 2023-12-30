@@ -11,11 +11,10 @@ public class SimpleOrder extends Order {
         this();
         setUserName(userName);
     }
-    public SimpleOrder(){
+
+    public SimpleOrder() {
         setProductAmount(new HashMap<>());
     }
-
-
 
     @Override
     public void getDetails() {
