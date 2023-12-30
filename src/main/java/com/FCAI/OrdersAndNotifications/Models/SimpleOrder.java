@@ -1,11 +1,8 @@
 package com.FCAI.OrdersAndNotifications.Models;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 
 import lombok.Data;
-import lombok.Setter;
 
 @Data
 public class SimpleOrder extends Order {
@@ -16,7 +13,6 @@ public class SimpleOrder extends Order {
     }
     public SimpleOrder(){
         setProductAmount(new HashMap<>());
-        setDate(LocalDateTime.now());
     }
 
 

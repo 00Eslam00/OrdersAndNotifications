@@ -1,5 +1,6 @@
 package com.FCAI.OrdersAndNotifications.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
+
 @Data
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
@@ -15,17 +17,20 @@ import java.util.List;
 })
 public abstract class Order {
     protected String userName;
-    protected LocalDateTime date;
+    protected LocalDateTime date = LocalDateTime.now();
     protected HashMap<String, Integer> productAmount;
 
+    @JsonIgnore
     public void add(Order order) {
         throw new UnsupportedOperationException();
     }
 
+    @JsonIgnore
     public void remove(Order order) {
         throw new UnsupportedOperationException();
     }
 
+    @JsonIgnore
     public List<Order> getOrderList() {
         throw new UnsupportedOperationException();
     }

@@ -24,6 +24,7 @@ public class OrderFactory {
             order1 = new SimpleOrder(order.get(0).getUserName());
             order1.setProductAmount(order.get(0).getProductList());
         }
+        order1.getDetails();
         return order1;
     }
 }
