@@ -7,15 +7,16 @@ import lombok.Data;
 @Data
 public class SimpleOrder extends Order {
 
+    private int orderID;
+
     public SimpleOrder(String userName) {
         this();
         setUserName(userName);
     }
-    public SimpleOrder(){
+
+    public SimpleOrder() {
         setProductAmount(new HashMap<>());
     }
-
-
 
     @Override
     public void getDetails() {

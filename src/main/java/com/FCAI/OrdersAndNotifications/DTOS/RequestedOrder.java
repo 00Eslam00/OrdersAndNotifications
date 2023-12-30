@@ -1,6 +1,5 @@
 package com.FCAI.OrdersAndNotifications.DTOS;
 
-import com.FCAI.OrdersAndNotifications.Models.Product;
 import lombok.Data;
 
 import java.util.HashMap;

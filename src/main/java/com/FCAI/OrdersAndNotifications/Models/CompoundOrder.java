@@ -10,6 +10,7 @@ import java.util.List;
 public class CompoundOrder extends Order {
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+    private int orderID;
     private List<Order> orderList = new ArrayList<>();
 
     @Override

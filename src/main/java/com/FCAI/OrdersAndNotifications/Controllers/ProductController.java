@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.FCAI.OrdersAndNotifications.Models.*;
-import com.FCAI.OrdersAndNotifications.Repositories.ProductRepository;
+import com.FCAI.OrdersAndNotifications.Repositories.IProductRepo;
 
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
 
     @Autowired
-    private ProductRepository productRepo;
+    private IProductRepo productRepo;
 
     @GetMapping("/")
     public List<Product> getAllProduct() {

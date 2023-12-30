@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import com.FCAI.OrdersAndNotifications.Models.Product;
 
-public interface ProductRepository {
+public interface IProductRepo {
 
     List<Product> getAll();
 

@@ -1,5 +1,6 @@
 package com.FCAI.OrdersAndNotifications.Controllers;
 
+import com.FCAI.OrdersAndNotifications.Components.INotificationManager;
 import com.FCAI.OrdersAndNotifications.DTOS.RequestedOrder;
 import com.FCAI.OrdersAndNotifications.Factories.OrderFactory;
 import com.FCAI.OrdersAndNotifications.Models.Order;
@@ -14,20 +15,30 @@ public class OrderController {
 
     @Autowired
     IOrderRepo orderRepo;
+
+    @Autowired
+    INotificationManager notificationManager;
+
     @PostMapping("/api/order/")
     List<RequestedOrder> createOrder(@RequestBody List<RequestedOrder> orders) {
         Order order = (new OrderFactory()).makeOrder(orders);
         orderRepo.add(order);
+        notificationManager.addToPlacementQueue(order);
         return orders;
     }
 
     @GetMapping("/api/order/{username}")
-    List<Order> getUserOrders(@PathVariable String username){
+    List<Order> getUserOrders(@PathVariable String username) {
         return orderRepo.getUserOrders(username);
     }
 
     @GetMapping("/api/order/")
-    List<Order> getUserOrders(){
+    List<Order> getUserOrders() {
         return orderRepo.getAllOrders();
+    }
+
+    @DeleteMapping("/api/order/{orderId}")
+    void deleteOrder(@PathVariable int orderId) {
+
     }
 }

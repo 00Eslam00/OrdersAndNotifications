@@ -11,11 +11,11 @@ import com.FCAI.OrdersAndNotifications.Models.Product;
 import com.FCAI.OrdersAndNotifications.Utils.ProductGenerator;
 
 @Service
-public class ImpelementedProductRepository implements ProductRepository {
+public class ProductRepo implements IProductRepo {
 
     private List<Product> products;
 
-    public ImpelementedProductRepository() {
+    public ProductRepo() {
         products = ProductGenerator.generateProducts();
     }
 
