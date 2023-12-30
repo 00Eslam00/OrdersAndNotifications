@@ -19,6 +19,7 @@ public abstract class Order {
     protected String userName;
     protected LocalDateTime date = LocalDateTime.now();
     protected HashMap<String, Integer> productAmount;
+    protected Integer orderID;
 
     @JsonIgnore
     public void add(Order order) {

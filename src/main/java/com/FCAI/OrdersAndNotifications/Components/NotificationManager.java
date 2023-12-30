@@ -69,10 +69,6 @@ public class NotificationManager implements INotificationManager {
         }
     }
 
-    private void startSceduler() {
-        scheduler = Executors.newSingleThreadScheduledExecutor();
-    }
-
     private void periodicCheck() {
         lock.lock();
         try {
@@ -84,7 +80,7 @@ public class NotificationManager implements INotificationManager {
 
                 if (placementQueue.isEmpty()) {
                     // If the queue becomes empty, shut down the scheduled task
-                    scheduler.shutdown();
+                    endScheduler();
                 }
             }
         } finally {
@@ -94,8 +90,12 @@ public class NotificationManager implements INotificationManager {
 
     // Additional methods as needed
 
+    private void startSceduler() {
+        scheduler = Executors.newSingleThreadScheduledExecutor();
+    }
+
     // Cleanup the scheduler on application shutdown
-    public void endScheduler() {
+    private void endScheduler() {
         scheduler.shutdown();
     }
 }

@@ -7,12 +7,14 @@ import com.FCAI.OrdersAndNotifications.Models.Order;
 
 public interface INotificationManager {
 
-    public void addToPlacementQueue(Order order);
+    void addToPlacementQueue(Order order);
 
-    public void addToShipmentQueue(Order order);
+    void addToShipmentQueue(Order order);
 
-    public List<Notification> getPlacementQueue();
+    List<Notification> getPlacementQueue();
 
-    public List<Notification> getShipmentQueue();
+    List<Notification> getShipmentQueue();
+
+    void removeFromQueue(int orderID);
 
 }

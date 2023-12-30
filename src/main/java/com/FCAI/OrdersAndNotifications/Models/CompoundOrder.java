@@ -1,16 +1,19 @@
 package com.FCAI.OrdersAndNotifications.Models;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ObjectArraySerializer;
+
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@JsonSerialize(using = ObjectArraySerializer.class)
 public class CompoundOrder extends Order {
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-    private int orderID;
     private List<Order> orderList = new ArrayList<>();
 
     @Override

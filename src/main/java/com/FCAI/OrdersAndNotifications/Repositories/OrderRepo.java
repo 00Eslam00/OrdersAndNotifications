@@ -10,13 +10,18 @@ import java.util.List;
 public class OrderRepo implements IOrderRepo {
     private List<Order> orderList;
 
+    private int orderIDCounter = 0;
+
     public OrderRepo() {
         orderList = new ArrayList<>();
     }
+
     @Override
     public void add(Order order) {
+        order.setOrderID(orderIDCounter++);
         orderList.add(order);
     }
+
     @Override
     public void remove(Order order) {
         orderList.remove(order);
@@ -34,7 +39,7 @@ public class OrderRepo implements IOrderRepo {
 
     @Override
     public void display() {
-        for(var order:orderList){
+        for (var order : orderList) {
             order.getDetails();
         }
     }

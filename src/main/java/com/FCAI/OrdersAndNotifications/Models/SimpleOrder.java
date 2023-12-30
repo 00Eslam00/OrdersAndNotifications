@@ -7,8 +7,6 @@ import lombok.Data;
 @Data
 public class SimpleOrder extends Order {
 
-    private int orderID;
-
     public SimpleOrder(String userName) {
         this();
         setUserName(userName);
