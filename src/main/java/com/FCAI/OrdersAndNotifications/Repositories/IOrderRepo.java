@@ -15,4 +15,6 @@ public interface IOrderRepo {
 
     void display();
 
+//    void deductBalance(String userName, double amount);
+
 }

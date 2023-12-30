@@ -42,4 +42,11 @@ public class CompoundOrder extends Order {
             order.getDetails();
         }
     }
+
+    @Override
+    public double calculateTotalPrice() {
+        return getOrderList().stream()
+                .mapToDouble(Order::calculateTotalPrice)
+                .sum();
+    }
 }

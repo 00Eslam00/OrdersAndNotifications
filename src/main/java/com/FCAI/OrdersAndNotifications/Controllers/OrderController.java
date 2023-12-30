@@ -2,6 +2,7 @@ package com.FCAI.OrdersAndNotifications.Controllers;
 
 import com.FCAI.OrdersAndNotifications.DTOS.RequestedOrder;
 import com.FCAI.OrdersAndNotifications.Factories.OrderFactory;
+import com.FCAI.OrdersAndNotifications.Models.CompoundOrder;
 import com.FCAI.OrdersAndNotifications.Models.Order;
 import com.FCAI.OrdersAndNotifications.Repositories.IOrderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,13 @@ public class OrderController {
     List<RequestedOrder> createOrder(@RequestBody List<RequestedOrder> orders) {
         Order order = (new OrderFactory()).makeOrder(orders);
         orderRepo.add(order);
+//        if (order instanceof CompoundOrder) {
+//            order.getOrderList().forEach(subOrder -> {
+//                orderRepo.deductBalance(subOrder.getUserName(), subOrder.calculateTotalPrice());
+//            });
+//        } else {
+//            orderRepo.deductBalance(order.getUserName(), order.calculateTotalPrice());
+//        }
         return orders;
     }
 

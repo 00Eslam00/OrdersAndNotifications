@@ -36,4 +36,6 @@ public abstract class Order {
     }
 
     abstract public void getDetails();
+
+    public abstract double calculateTotalPrice();
 }

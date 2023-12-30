@@ -1,6 +1,7 @@
 package com.FCAI.OrdersAndNotifications.Repositories;
 
 import com.FCAI.OrdersAndNotifications.Models.Order;
+import com.FCAI.OrdersAndNotifications.Models.User;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -38,4 +39,10 @@ public class OrderRepo implements IOrderRepo {
             order.getDetails();
         }
     }
+
+//    public void deductBalance(String userName, double amount) {
+//        User user = userRepo.getUserByUsername(userName);
+//        user.setBalance(user.getBalance() - amount);
+//        userRepo.updateUser(user);
+//    }
 }

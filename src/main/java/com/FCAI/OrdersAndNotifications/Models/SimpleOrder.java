@@ -25,4 +25,11 @@ public class SimpleOrder extends Order {
             System.out.println(pro.getKey() + " " + pro.getValue());
         }
     }
+
+    @Override
+    public double calculateTotalPrice() {
+        return getProductAmount().values().stream()
+                .mapToDouble(price -> price)
+                .sum();
+    }
 }
