@@ -1,15 +1,17 @@
 package com.FCAI.OrdersAndNotifications.Models;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@Data
 public class CompoundOrder extends Order{
 
-    private List<Order> orderList;
+    private List<Order> orderList = new ArrayList<>();
 
-    public CompoundOrder() {
+   /* public CompoundOrder() {
         orderList = new ArrayList<>();
-    }
+    }*/
 
     @Override
     public void add(Order order) {
@@ -25,7 +27,9 @@ public class CompoundOrder extends Order{
     }
 
     @Override
-    public void createOrder(String userName) {
-
+    public void getDetails() {
+        for(var order:orderList){
+            order.getDetails();
+        }
     }
 }

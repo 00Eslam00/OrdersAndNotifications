@@ -10,4 +10,7 @@ public class Product {
     private String Category;
     private double price;
     private int available;
+    void test(){
+        System.out.println("Hello");
+    }
 }

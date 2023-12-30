@@ -11,15 +11,23 @@ import lombok.Setter;
 public class SimpleOrder extends Order {
 
     public SimpleOrder(String userName) {
-        setDate(LocalDateTime.now());
+        this();
         setUserName(userName);
+    }
+    public SimpleOrder(){
         setProductAmount(new HashMap<>());
+        setDate(LocalDateTime.now());
+
     }
 
 
 
     @Override
-    public void createOrder(String userName) {
-
+    public void getDetails() {
+        System.out.println("Username : " + getUserName());
+        var products = getProductAmount();
+        for (var pro : products.entrySet()) {
+            System.out.println(pro.getKey() + " " + pro.getValue());
+        }
     }
 }
