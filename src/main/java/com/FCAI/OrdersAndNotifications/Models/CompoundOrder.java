@@ -57,13 +57,18 @@ public class CompoundOrder extends Order {
 
     private class CompoundOrderIterator implements Iterator<Order> {
         private boolean firstIteration = true;
+        private Iterator<Order> orderIterator;
+
+        public CompoundOrderIterator() {
+            orderIterator = new ArrayList<Order>(orderList).iterator();
+        }
 
         @Override
         public boolean hasNext() {
             if (firstIteration) {
                 return true;
             } else {
-                return orderList.iterator().hasNext();
+                return orderIterator.hasNext();
             }
         }
 
@@ -73,7 +78,7 @@ public class CompoundOrder extends Order {
                 firstIteration = false;
                 return CompoundOrder.this;
             } else {
-                return orderList.iterator().next();
+                return orderIterator.next();
             }
         }
     }
