@@ -1,5 +1,6 @@
 package com.FCAI.OrdersAndNotifications.Components;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.FCAI.OrdersAndNotifications.Models.Notification;
@@ -16,5 +17,9 @@ public interface INotificationManager {
     List<Notification> getShipmentQueue();
 
     int removeFromQueue(int orderID);
+
+    HashMap<String, Integer> getMostNotificationTemplate();
+
+    HashMap<String, Integer> getMostNotifiedEmails();
 
 }

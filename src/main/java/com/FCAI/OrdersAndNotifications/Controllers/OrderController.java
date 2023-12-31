@@ -36,6 +36,7 @@ public class OrderController {
             orderRepo.add(order);
             notificationManager.addToPlacementQueue(order);
             response.setResponseObj(order);
+            userBalanceBL.reduceFromUserBalance(order);
             return response;
         }
         response.setCode(1);

@@ -23,4 +23,9 @@ public class PlacementNotification extends Notification {
         s.append("is confirmed. thanks for using our store :)");
         return s.toString();
     }
+
+    @Override
+    public String getMyKind() {
+        return "Placement";
+    }
 }

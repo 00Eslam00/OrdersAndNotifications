@@ -24,4 +24,9 @@ public class ShipmentNotification extends Notification {
         s.append("is going to be shipped. thanks for using our store :)");
         return s.toString();
     }
+
+    @Override
+    public String getMyKind() {
+        return "Shippment";
+    }
 }

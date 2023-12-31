@@ -27,4 +27,6 @@ public abstract class Notification {
 
     }
 
+    abstract public String getMyKind();
+
 }

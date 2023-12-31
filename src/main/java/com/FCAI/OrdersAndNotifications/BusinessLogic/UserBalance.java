@@ -16,8 +16,13 @@ public class UserBalance implements IUserBalanceBL {
 
     @Override
     public void reduceFromUserBalance(Order order) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'reduceFromUserBalance'");
+        for (Order order2 : order) {
+            for (var proAmount : order2.getProductAmount().entrySet()) {
+                double price = proRepo.getBySerialNumber(proAmount.getKey()).get().getPrice();
+                var user = userRepo.getUserByUserName(order2.getUserName()).get();
+                user.setBalance(user.getBalance() - (price * (proAmount.getValue())));
+            }
+        }
     }
 
     @Override
@@ -30,6 +35,22 @@ public class UserBalance implements IUserBalanceBL {
             }
         }
 
+    }
+
+    @Override
+    public void reduceFromUserFees(Order order) {
+        int numOfUers = 0;
+        double fees = 20;
+        for (Order order2 : order) {
+            numOfUers++;
+        }
+
+        fees /= numOfUers;
+
+        for (Order order2 : order) {
+            var user = userRepo.getUserByUserName(order2.getUserName()).get();
+            user.setBalance(user.getBalance() - fees);
+        }
     }
 
 }

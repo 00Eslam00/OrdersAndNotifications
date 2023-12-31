@@ -1,6 +1,7 @@
 package com.FCAI.OrdersAndNotifications.Components;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -9,26 +10,58 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.FCAI.OrdersAndNotifications.BusinessLogic.IUserBalanceBL;
 import com.FCAI.OrdersAndNotifications.Models.Notification;
 import com.FCAI.OrdersAndNotifications.Models.Order;
 import com.FCAI.OrdersAndNotifications.Models.PlacementNotification;
 import com.FCAI.OrdersAndNotifications.Models.ShipmentNotification;
+import com.FCAI.OrdersAndNotifications.Repositories.IUserRepo;
 
 @Component
 public class NotificationManager implements INotificationManager {
     private List<Notification> placementQueue = new LinkedList<>();
     private List<Notification> shipmentQueue = new LinkedList<>();
+    private HashMap<String, Integer> notifiedEmail = new HashMap<>();
+    private HashMap<String, Integer> notificationTemp = new HashMap<>();
+
+    @Autowired
+    IUserBalanceBL userBalance;
+
+    @Autowired
+    IUserRepo userRepo;
 
     private ScheduledExecutorService scheduler;
     private final Lock lock = new ReentrantLock();
+
+    private void handleAdding(Notification notification) {
+        String notificationType = notification.getMyKind();
+
+        String userEmail;
+
+        userEmail = userRepo.getUserByUserName(notification.getOrder().getUserName()).get().getEmail();
+
+        if (notifiedEmail.containsKey(userEmail))
+            notifiedEmail.put(userEmail, 1);
+        else
+            notifiedEmail.put(userEmail, notifiedEmail.get(userEmail) + 1);
+
+        if (notificationTemp.containsKey(notificationType))
+            notificationTemp.put(notificationType, 1);
+        else
+            notificationTemp.put(notificationType, notificationTemp.get(notificationType) + 1);
+    }
 
     @Override
     public void addToPlacementQueue(Order order) {
         lock.lock();
         try {
-            placementQueue.add(new PlacementNotification(order, 60));
+            var n = new PlacementNotification(order, 60);
+            placementQueue.add(n);
+            handleAdding(n);
+
             startPeriodicCheck();
         } finally {
             lock.unlock();
@@ -47,7 +80,10 @@ public class NotificationManager implements INotificationManager {
 
     @Override
     public void addToShipmentQueue(Order order) {
-        shipmentQueue.addLast(new ShipmentNotification(order));
+        userBalance.reduceFromUserFees(order);
+        var n = new ShipmentNotification(order);
+        shipmentQueue.addLast(n);
+        handleAdding(n);
     }
 
     private void startPeriodicCheck() {
@@ -108,5 +144,17 @@ public class NotificationManager implements INotificationManager {
             }
         }
         return 0;
+    }
+
+    @Override
+    public HashMap<String, Integer> getMostNotificationTemplate() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getMostNotificationTemplate'");
+    }
+
+    @Override
+    public HashMap<String, Integer> getMostNotifiedEmails() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getMostNotifiedEmails'");
     }
 }

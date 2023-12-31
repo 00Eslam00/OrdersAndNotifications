@@ -6,5 +6,7 @@ public interface IUserBalanceBL {
 
     void reduceFromUserBalance(Order order);
 
+    void reduceFromUserFees(Order order);
+
     void returnToUserBalance(Order order);
 }
