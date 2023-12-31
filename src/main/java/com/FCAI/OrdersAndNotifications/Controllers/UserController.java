@@ -30,9 +30,15 @@ public class UserController {
             return res;
         }
 
+        if (userRepo.getUserByUserName(registeration.getUserName()).isPresent()) {
+            res.setCode(1);
+            res.setMsg("sorry, username is used before ");
+            return res;
+        }
+
         if (userRepo.getUserByEmail(registeration.getEmail()).isPresent()) {
             res.setCode(1);
-            res.setMsg("sorry email is used before ");
+            res.setMsg("sorry, this email is used before ");
             return res;
         }
 
@@ -42,7 +48,7 @@ public class UserController {
             return res;
         }
 
-        if (registeration.getBalance() < 0 ) {
+        if (registeration.getBalance() < 0) {
             res.setCode(1);
             res.setMsg("enta 3abeet yasta , balance eh elle besaleb");
             return res;
