@@ -51,14 +51,15 @@ public class NotificationManager implements INotificationManager {
         if (notificationTemp.containsKey(notificationType))
             notificationTemp.put(notificationType, 1);
         else
-            notificationTemp.put(notificationType, notificationTemp.get(notificationType) + 1);
+            notificationTemp.put(notificationType, notificationTemp.get(notificationType)
+                    + 1);
     }
 
     @Override
     public void addToPlacementQueue(Order order) {
         lock.lock();
         try {
-            var n = new PlacementNotification(order, 60);
+            Notification n = new PlacementNotification(order, 60);
             placementQueue.add(n);
             handleAdding(n);
 
@@ -81,8 +82,8 @@ public class NotificationManager implements INotificationManager {
     @Override
     public void addToShipmentQueue(Order order) {
         userBalance.reduceFromUserFees(order);
-        var n = new ShipmentNotification(order);
-        shipmentQueue.addLast(n);
+        Notification n = new ShipmentNotification(order);
+        shipmentQueue.add(n);
         handleAdding(n);
     }
 
@@ -139,7 +140,7 @@ public class NotificationManager implements INotificationManager {
 
         for (int i = 0; i < shipmentQueue.size(); i++) {
             if (shipmentQueue.get(i).getOrder().getOrderID() == orderID) {
-                placementQueue.remove(i);
+                shipmentQueue.remove(i);
                 return 2;
             }
         }
@@ -148,13 +149,11 @@ public class NotificationManager implements INotificationManager {
 
     @Override
     public HashMap<String, Integer> getMostNotificationTemplate() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMostNotificationTemplate'");
+        return notificationTemp;
     }
 
     @Override
     public HashMap<String, Integer> getMostNotifiedEmails() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMostNotifiedEmails'");
+        return notifiedEmail;
     }
 }
