@@ -9,5 +9,5 @@ public class RegisterUser {
     private String mobileNumber;
     private double balance;
     private String password;
-    private String ConfirmedPassword;
+    private String confirmedPassword;
 }
