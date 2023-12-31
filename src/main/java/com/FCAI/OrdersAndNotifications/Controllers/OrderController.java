@@ -1,12 +1,12 @@
 package com.FCAI.OrdersAndNotifications.Controllers;
 
 import com.FCAI.OrdersAndNotifications.BusinessLogic.IOrderBl;
-import com.FCAI.OrdersAndNotifications.BusinessLogic.OrderBL;
 import com.FCAI.OrdersAndNotifications.Components.INotificationManager;
 import com.FCAI.OrdersAndNotifications.DTOS.RequestedOrder;
 import com.FCAI.OrdersAndNotifications.DTOS.Response;
 import com.FCAI.OrdersAndNotifications.Factories.OrderFactory;
 import com.FCAI.OrdersAndNotifications.Models.Order;
+import com.FCAI.OrdersAndNotifications.Models.SimpleOrder;
 import com.FCAI.OrdersAndNotifications.Repositories.IOrderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,17 +41,18 @@ public class OrderController {
     }
 
     @GetMapping("/api/order/{username}")
-    List<Order> getUserOrders(@PathVariable String username) {
-        return orderRepo.getUserOrders(username);
+    Response<List<Order>> getUserOrders(@PathVariable String username) {
+        return (new Response<>(orderRepo.getUserOrders(username)));
     }
 
     @GetMapping("/api/order/")
-    List<Order> getUserOrders() {
-        return orderRepo.getAllOrders();
+    Response<List<Order>> getUserOrders() {
+        return (new Response<>(orderRepo.getAllOrders()));
     }
 
     @DeleteMapping("/api/order/{orderId}")
-    void deleteOrder(@PathVariable int orderId) {
-
+    Response<Order> deleteOrder(@PathVariable int orderId) {
+        Order order = new SimpleOrder();
+        return (new Response<>(order));
     }
 }

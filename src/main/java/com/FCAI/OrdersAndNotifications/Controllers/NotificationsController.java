@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.FCAI.OrdersAndNotifications.Components.INotificationManager;
+import com.FCAI.OrdersAndNotifications.DTOS.Response;
 import com.FCAI.OrdersAndNotifications.Models.Notification;
 
 @RestController
@@ -16,7 +17,7 @@ public class NotificationsController {
     INotificationManager notificationManager;
 
     @GetMapping("/api/notification/")
-    public List<Notification> getAllNoty() {
-        return notificationManager.getPlacementQueue();
+    public Response<List<Notification>> getAllNoty() {
+        return (new Response<List<Notification>>(notificationManager.getPlacementQueue()));
     }
 }

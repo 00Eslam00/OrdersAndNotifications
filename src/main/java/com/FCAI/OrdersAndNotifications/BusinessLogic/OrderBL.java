@@ -4,10 +4,8 @@ import com.FCAI.OrdersAndNotifications.Models.Order;
 import com.FCAI.OrdersAndNotifications.Models.Product;
 import com.FCAI.OrdersAndNotifications.Repositories.IProductRepo;
 import com.FCAI.OrdersAndNotifications.Repositories.IUserRepo;
-import com.FCAI.OrdersAndNotifications.Repositories.OrderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 
@@ -32,7 +30,8 @@ public class OrderBL implements IOrderBl {
                 if (!(productRepo.getBySerialNumber(proAmount.getKey()).isPresent()))
                     return false;
                 if (totalProductAmount.containsKey(proAmount.getKey()))
-                    totalProductAmount.put(proAmount.getKey(), totalProductAmount.get(proAmount.getKey()) + proAmount.getValue());
+                    totalProductAmount.put(proAmount.getKey(),
+                            totalProductAmount.get(proAmount.getKey()) + proAmount.getValue());
                 else
                     totalProductAmount.put(proAmount.getKey(), proAmount.getValue());
                 totalCost += productRepo.getBySerialNumber(proAmount.getKey()).get().getPrice() * proAmount.getValue();

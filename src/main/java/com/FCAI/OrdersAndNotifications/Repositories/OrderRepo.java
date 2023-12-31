@@ -1,7 +1,6 @@
 package com.FCAI.OrdersAndNotifications.Repositories;
 
 import com.FCAI.OrdersAndNotifications.Models.Order;
-import com.FCAI.OrdersAndNotifications.Models.User;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
