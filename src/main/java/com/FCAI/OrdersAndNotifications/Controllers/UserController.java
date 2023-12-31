@@ -65,7 +65,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/api/users/")
+    @GetMapping("/api/user/")
     Response<List<User>> getAllUsers() {
 
         Response<List<User>> res = new Response<List<User>>();
