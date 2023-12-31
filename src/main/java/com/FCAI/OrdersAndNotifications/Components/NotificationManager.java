@@ -74,12 +74,10 @@ public class NotificationManager implements INotificationManager {
         try {
             if (!placementQueue.isEmpty()
                     && placementQueue.get(0).getSentConfiguredTime().isBefore(LocalDateTime.now())) {
-                Notification notification = placementQueue.remove(0); // Remove the first element
-                // Process the notification
+                Notification notification = placementQueue.remove(0); // Remove the 
                 System.out.println("Processing notification: " + notification);
 
                 if (placementQueue.isEmpty()) {
-                    // If the queue becomes empty, shut down the scheduled task
                     endScheduler();
                 }
             }
@@ -97,5 +95,14 @@ public class NotificationManager implements INotificationManager {
     // Cleanup the scheduler on application shutdown
     private void endScheduler() {
         scheduler.shutdown();
+    }
+
+    @Override
+    public void removeFromQueue(int orderID) {
+        for (int i = 0; i < placementQueue.size(); i++) {
+            if(placementQueue.get(i).getOrder().getOrderID() == orderID){
+                
+            }
+        }
     }
 }

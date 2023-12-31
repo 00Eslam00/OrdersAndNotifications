@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 @Data
@@ -15,7 +17,7 @@ import java.util.List;
         @JsonSubTypes.Type(value = SimpleOrder.class, name = "simple"),
         @JsonSubTypes.Type(value = CompoundOrder.class, name = "compound")
 })
-public abstract class Order {
+public abstract class Order implements Iterable<Order> {
     protected String userName;
     protected LocalDateTime date = LocalDateTime.now();
     protected HashMap<String, Integer> productAmount;
@@ -34,6 +36,12 @@ public abstract class Order {
     @JsonIgnore
     public List<Order> getOrderList() {
         throw new UnsupportedOperationException();
+    }
+
+    @JsonIgnore
+    @Override
+    public Iterator<Order> iterator() {
+        return Collections.singletonList(this).iterator();
     }
 
     abstract public void getDetails();

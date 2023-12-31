@@ -1,5 +1,6 @@
 package com.FCAI.OrdersAndNotifications.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ObjectArraySerializer;
@@ -7,10 +8,11 @@ import com.fasterxml.jackson.databind.ser.std.ObjectArraySerializer;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Data
-@JsonSerialize(using = ObjectArraySerializer.class)
+// @JsonSerialize(using = ObjectArraySerializer.class)
 public class CompoundOrder extends Order {
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -47,6 +49,36 @@ public class CompoundOrder extends Order {
         }
     }
 
+    @JsonIgnore
+    @Override
+    public Iterator<Order> iterator() {
+        return new CompoundOrderIterator();
+    }
+
+    private class CompoundOrderIterator implements Iterator<Order> {
+        private boolean firstIteration = true;
+
+        @Override
+        public boolean hasNext() {
+            if (firstIteration) {
+                return true;
+            } else {
+                return orderList.iterator().hasNext();
+            }
+        }
+
+        @Override
+        public Order next() {
+            if (firstIteration) {
+                firstIteration = false;
+                return CompoundOrder.this;
+            } else {
+                return orderList.iterator().next();
+            }
+        }
+    }
+
+    @JsonIgnore
     @Override
     public double calculateTotalPrice() {
         return getOrderList().stream()

@@ -29,6 +29,10 @@ public class OrderController {
 
     @GetMapping("/api/order/{username}")
     List<Order> getUserOrders(@PathVariable String username) {
+
+        for (var order : orderRepo.getUserOrders(username))
+            System.out.println(order.getUserName() + " " + order.getOrderID());
+
         return orderRepo.getUserOrders(username);
     }
 
@@ -39,6 +43,6 @@ public class OrderController {
 
     @DeleteMapping("/api/order/{orderId}")
     void deleteOrder(@PathVariable int orderId) {
-        
+
     }
 }
