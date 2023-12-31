@@ -7,6 +7,7 @@ public class RegisterUser {
     private String userName;
     private String email;
     private String mobileNumber;
+    private double balance;
     private String password;
     private String ConfirmedPassword;
 }

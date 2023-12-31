@@ -30,8 +30,13 @@ public class OrderController {
     @GetMapping("/api/order/{username}")
     List<Order> getUserOrders(@PathVariable String username) {
 
-        for (var order : orderRepo.getUserOrders(username))
-            System.out.println(order.getUserName() + " " + order.getOrderID());
+        int size = 0;
+        for (var order : orderRepo.getUserOrders(username)) {
+
+            for (Order order2 : order) {
+                System.out.println("mine " + order2.getUserName() + " " + order2.getOrderID());
+            }
+        }
 
         return orderRepo.getUserOrders(username);
     }

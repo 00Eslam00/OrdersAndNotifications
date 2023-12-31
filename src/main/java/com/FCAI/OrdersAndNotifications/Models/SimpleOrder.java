@@ -1,6 +1,10 @@
 package com.FCAI.OrdersAndNotifications.Models;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -23,6 +27,12 @@ public class SimpleOrder extends Order {
         for (var pro : products.entrySet()) {
             System.out.println(pro.getKey() + " " + pro.getValue());
         }
+    }
+
+    @JsonIgnore
+    @Override
+    public Iterator<Order> iterator() {
+        return Collections.singletonList((Order) this).iterator();
     }
 
     @Override

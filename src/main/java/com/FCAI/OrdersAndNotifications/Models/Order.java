@@ -40,9 +40,7 @@ public abstract class Order implements Iterable<Order> {
 
     @JsonIgnore
     @Override
-    public Iterator<Order> iterator() {
-        return Collections.singletonList(this).iterator();
-    }
+    abstract public Iterator<Order> iterator();
 
     abstract public void getDetails();
 
