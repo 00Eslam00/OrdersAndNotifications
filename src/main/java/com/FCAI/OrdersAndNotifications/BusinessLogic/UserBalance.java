@@ -1,11 +1,13 @@
 package com.FCAI.OrdersAndNotifications.BusinessLogic;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.FCAI.OrdersAndNotifications.Models.Order;
 import com.FCAI.OrdersAndNotifications.Repositories.IProductRepo;
 import com.FCAI.OrdersAndNotifications.Repositories.IUserRepo;
 
+@Component
 public class UserBalance implements IUserBalanceBL {
 
     @Autowired
