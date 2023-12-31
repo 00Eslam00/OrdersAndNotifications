@@ -57,4 +57,14 @@ public class OrderBL implements IOrderBl {
             }
         }
     }
+
+    @Override
+    public void returnProductAmount(Order order) {
+        for (var or : order) {
+            for (var proAmount : or.getProductAmount().entrySet()) {
+                Product currProduct = productRepo.getBySerialNumber(proAmount.getKey()).get();
+                currProduct.setAvailable(currProduct.getAvailable() + proAmount.getValue());
+            }
+        }
+    }
 }

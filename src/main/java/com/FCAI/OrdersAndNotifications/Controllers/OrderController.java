@@ -1,6 +1,7 @@
 package com.FCAI.OrdersAndNotifications.Controllers;
 
 import com.FCAI.OrdersAndNotifications.BusinessLogic.IOrderBl;
+import com.FCAI.OrdersAndNotifications.BusinessLogic.IUserBalanceBL;
 import com.FCAI.OrdersAndNotifications.Components.INotificationManager;
 import com.FCAI.OrdersAndNotifications.DTOS.RequestedOrder;
 import com.FCAI.OrdersAndNotifications.DTOS.Response;
@@ -24,6 +25,8 @@ public class OrderController {
 
     @Autowired
     IOrderBl orderBl;
+    @Autowired
+    IUserBalanceBL userBalanceBL;
 
     @PostMapping("/api/order/")
     Response<Order> createOrder(@RequestBody List<RequestedOrder> orders) {
@@ -51,8 +54,22 @@ public class OrderController {
     }
 
     @DeleteMapping("/api/order/{orderId}")
-    Response<Order> deleteOrder(@PathVariable int orderId) {
-        Order order = new SimpleOrder();
-        return (new Response<>(order));
+    Response<Order> cancleOrder(@PathVariable int orderId) {
+        Order order = orderRepo.getOrderByID(orderId).get();
+        Response<Order> res = new Response<Order>(order);
+
+        int stat = notificationManager.removeFromQueue(orderId);
+        if (stat == 0) {
+            res.setCode(1);
+            res.setMsg("sorry, there is no order with this id or order may be already shipped");
+        } else if (stat == 1) {
+            res.setMsg("order has been canceld successfully");
+            userBalanceBL.returnToUserBalance(order);
+            orderBl.returnProductAmount(order);
+        } else if (stat == 2) {
+            res.setCode(1);
+            res.setMsg("sorry, this order is being shipped to its address");
+        }
+        return res;
     }
 }

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import com.FCAI.OrdersAndNotifications.Models.Notification;
 import com.FCAI.OrdersAndNotifications.Models.Order;
+import com.FCAI.OrdersAndNotifications.Models.PlacementNotification;
+import com.FCAI.OrdersAndNotifications.Models.ShipmentNotification;
 
 @Component
 public class NotificationManager implements INotificationManager {
@@ -26,8 +28,7 @@ public class NotificationManager implements INotificationManager {
     public void addToPlacementQueue(Order order) {
         lock.lock();
         try {
-            placementQueue.add(new Notification(order, 60));
-            System.out.println("printing adding");
+            placementQueue.add(new PlacementNotification(order, 60));
             startPeriodicCheck();
         } finally {
             lock.unlock();
@@ -46,13 +47,7 @@ public class NotificationManager implements INotificationManager {
 
     @Override
     public void addToShipmentQueue(Order order) {
-        lock.lock();
-        try {
-            shipmentQueue.add(new Notification(order));
-            startPeriodicCheck();
-        } finally {
-            lock.unlock();
-        }
+        shipmentQueue.addLast(new ShipmentNotification(order));
     }
 
     private void startPeriodicCheck() {
@@ -73,8 +68,9 @@ public class NotificationManager implements INotificationManager {
         try {
             if (!placementQueue.isEmpty()
                     && placementQueue.get(0).getSentConfiguredTime().isBefore(LocalDateTime.now())) {
-                Notification notification = placementQueue.remove(0); // Remove the 
-                System.out.println("Processing notification: " + notification);
+                Notification notification = placementQueue.remove(0); // Remove the
+                addToShipmentQueue(notification.getOrder());
+                System.out.println(notification);
 
                 if (placementQueue.isEmpty()) {
                     endScheduler();
@@ -97,11 +93,20 @@ public class NotificationManager implements INotificationManager {
     }
 
     @Override
-    public void removeFromQueue(int orderID) {
+    public int removeFromQueue(int orderID) {
         for (int i = 0; i < placementQueue.size(); i++) {
-            if(placementQueue.get(i).getOrder().getOrderID() == orderID){
-                
+            if (placementQueue.get(i).getOrder().getOrderID() == orderID) {
+                placementQueue.remove(i);
+                return 1;
             }
         }
+
+        for (int i = 0; i < shipmentQueue.size(); i++) {
+            if (shipmentQueue.get(i).getOrder().getOrderID() == orderID) {
+                placementQueue.remove(i);
+                return 2;
+            }
+        }
+        return 0;
     }
 }

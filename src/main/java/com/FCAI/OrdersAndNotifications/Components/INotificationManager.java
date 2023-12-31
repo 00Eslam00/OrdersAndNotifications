@@ -15,6 +15,6 @@ public interface INotificationManager {
 
     List<Notification> getShipmentQueue();
 
-    void removeFromQueue(int orderID);
+    int removeFromQueue(int orderID);
 
 }

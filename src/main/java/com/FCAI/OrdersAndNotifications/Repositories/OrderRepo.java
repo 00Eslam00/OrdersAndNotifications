@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class OrderRepo implements IOrderRepo {
@@ -33,6 +34,11 @@ public class OrderRepo implements IOrderRepo {
     }
 
     @Override
+    public Optional<Order> getOrderByID(int orderID) {
+        return orderList.stream().filter(or -> or.getOrderID() == orderID).findFirst();
+    }
+
+    @Override
     public List<Order> getUserOrders(String userName) {
         return orderList.stream().filter(order -> order.getUserName().equals(userName)).toList();
     }
@@ -44,9 +50,9 @@ public class OrderRepo implements IOrderRepo {
         }
     }
 
-//    public void deductBalance(String userName, double amount) {
-//        User user = userRepo.getUserByUsername(userName);
-//        user.setBalance(user.getBalance() - amount);
-//        userRepo.updateUser(user);
-//    }
+    // public void deductBalance(String userName, double amount) {
+    // User user = userRepo.getUserByUsername(userName);
+    // user.setBalance(user.getBalance() - amount);
+    // userRepo.updateUser(user);
+    // }
 }

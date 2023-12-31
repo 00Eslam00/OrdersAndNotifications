@@ -6,4 +6,7 @@ public interface IOrderBl {
     public boolean valid(Order order);
 
     public void reduceProductAmount(Order order);
+
+    public void returnProductAmount(Order order);
+
 }
